@@ -25,18 +25,18 @@ Page({
   onLoad: function (options) {
     let id = options.tid;
     let todo = listModel.getTodoDetail(id);
-
-    let categories = categoryModel.getCategories();
-    categories = categories.map(function (item) {
-      return item.text
-    })
-
-    this.setData({
-      todo,
-      categories,
-      index: todo.index || 0,
-      date: util.formatTime((new Date(todo.date)), 1),
-      cate: todo.category
+    categoryModel.getCategories().then((res)=>{
+      let categories = res.data
+      categories = categories.map(function (item) {
+        return item.text
+      })
+      this.setData({
+        todo,
+        categories,
+        index: todo.index || 0,
+        date: util.formatTime((new Date(todo.date)), 1),
+        cate: todo.category
+      })
     })
   },
 

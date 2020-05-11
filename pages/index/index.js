@@ -8,10 +8,9 @@ import util from '../../utils/util.js';
 
 let listModel = new ListModel();
 let categoryModel = new CategoryModel();
-let date = new Date(date).getTime();
-let today = new Date(date).getTime();
 //var date = util.formatTime(new Date());
-
+let date = new Date(date).getTime();
+let today= new Date(date).getTime();
 Page({
   data: {
     todos: [],
@@ -39,23 +38,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let todos = listModel.getTodos();
+    let date = new Date(date).getTime();
+    let today = new Date(date).getTime();    
     this.setData({
-      todos
+      today,
+      date
     })
-    let cates = categoryModel.getCategories();
-    cates = cates.map(function (item) {
-      return item.text;
-    })
-    let cate = '全部'
-    cates.unshift(cate);
-    this.setData({
-      cates,
-      cate,
-      isAdd: true,
-      addText: '',
-      date: '',
-    })
+    this.getOpenID(this.initData)
   },
 
   onTap: function () {
@@ -238,4 +227,45 @@ Page({
       })
     }
   },
+
+  getOpenID(callback) {
+    wx.login({
+      success: res => {
+        wx.request({
+          url: 'http://127.0.0.1:8080/api/auth/wx_auth',
+          data: {
+            code: res.code
+          },
+          success: res => {
+            getApp().globalData.openid = res.data
+          },
+          complete: () => {
+            callback && callback()
+          }
+        })
+      }
+    })
+  },
+
+  initData() {
+    categoryModel.getCategories().then((res) => {
+      let cates = res.data;
+      cates = cates.map(function (item) {
+        return item.text;
+      })
+      let cate = '全部'
+      cates.unshift(cate);
+      this.setData({
+        cates,
+        cate,
+        isAdd: true,
+        addText: '',
+        date: '',
+      })
+    })
+    let todos = listModel.getTodos();
+    this.setData({
+      todos
+    })
+  }
 })

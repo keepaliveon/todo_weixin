@@ -41,9 +41,10 @@ Page({
     if (!text) {
       return;
     }
-    categoryModel.addCategory(text);
-    wx.navigateBack({
-      delta: 1
+    categoryModel.addCategory(text).then(()=>{
+      wx.navigateBack({
+        delta: 1
+      })
     })
   },
 

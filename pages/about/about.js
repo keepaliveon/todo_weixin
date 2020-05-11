@@ -1,4 +1,6 @@
-import { CategoryModel } from '../../model/category.js';
+import {
+  CategoryModel
+} from '../../model/category.js';
 
 let categoryModel = new CategoryModel();
 
@@ -10,11 +12,21 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    cates: []
+    cates: [],
+    email: ''
   },
   onLoad: function () {
+    wx.request({
+      url: 'http://127.0.0.1:8080/api/auth/userInfo/' + app.globalData.openid,
+      method: 'GET',
+      success: (res) => {
+        this.setData({
+          email: res.data.email
+        })
+      }
+    })
     if (app.globalData.userInfo) {
-      this.setData({ 
+      this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
@@ -42,10 +54,11 @@ Page({
   },
 
   onShow: function () {
-    console.log(app.globalData.openid)
-    let cates = categoryModel.getCategories();
-    this.setData({
-      cates
+    categoryModel.getCategories().then((res) => {
+      let cates = res.data
+      this.setData({
+        cates
+      })
     })
   },
 
@@ -56,9 +69,19 @@ Page({
       hasUserInfo: true
     })
     wx.request({
-      url: 'http://127.0.0.1:8080/api/auth/userInfo/'+app.globalData.openid,
+      url: 'http://127.0.0.1:8080/api/auth/userInfo/' + app.globalData.openid,
       method: 'PUT',
-      data: e.detail.userInfo,
+      data: {
+        nickName: e.detail.userInfo.nickName,
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        email: this.data.email
+      }
+    })
+  },
+
+  bindEmailInput: function (e) {
+    this.setData({
+      email: e.detail.value
     })
   },
 
