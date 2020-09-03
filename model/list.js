@@ -4,7 +4,7 @@ class ListModel {
     if (all.length === 0) {
       console.log("请求网络数据")
       wx.request({
-        url: 'http://127.0.0.1:8080/api/todo/all/' + getApp().globalData.openid,
+        url: 'https://www.keepaliveon.xyz:8080/api/todo/all/' + getApp().globalData.openid,
         method: 'GET',
         success: res => {
           wx.setStorageSync('todos', res.data);
@@ -54,7 +54,7 @@ class ListModel {
 
   addTodos(todo) {
     wx.request({
-      url: 'http://127.0.0.1:8080/api/todo/' + getApp().globalData.openid,
+      url: 'https://www.keepaliveon.xyz:8080/api/todo/' + getApp().globalData.openid,
       method: 'POST',
       data: todo,
       success: res => {
@@ -69,7 +69,7 @@ class ListModel {
 
   deleteTodo(id) {
     wx.request({
-      url: 'http://127.0.0.1:8080/api/todo/' + id,
+      url: 'https://www.keepaliveon.xyz:8080/api/todo/' + id,
       method: 'DELETE',
       success: res => {},
       complete: () => {}
@@ -85,7 +85,7 @@ class ListModel {
 
   updateLists(todo) {
     wx.request({
-      url: 'http://127.0.0.1:8080/api/todo/' + getApp().globalData.openid,
+      url: 'https://www.keepaliveon.xyz:8080/api/todo/' + getApp().globalData.openid,
       method: 'PUT',
       data: todo,
       success: () => {

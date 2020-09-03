@@ -232,7 +232,7 @@ Page({
     wx.login({
       success: res => {
         wx.request({
-          url: 'http://127.0.0.1:8080/api/auth/wx_auth',
+          url: 'https://www.keepaliveon.xyz:8080/api/auth/wx_auth',
           data: {
             code: res.code
           },
