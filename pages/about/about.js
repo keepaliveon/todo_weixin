@@ -17,7 +17,7 @@ Page({
   },
   onLoad: function () {
     wx.request({
-      url: 'https://www.keepaliveon.xyz:8080/api/auth/userInfo/' + app.globalData.openid,
+      url: 'http://127.0.0.1:8080/api/auth/userInfo/' + app.globalData.openid,
       method: 'GET',
       success: (res) => {
         this.setData({
@@ -69,7 +69,7 @@ Page({
       hasUserInfo: true
     })
     wx.request({
-      url: 'https://www.keepaliveon.xyz:8080/api/auth/userInfo/' + app.globalData.openid,
+      url: 'http://127.0.0.1:8080/api/auth/userInfo/' + app.globalData.openid,
       method: 'PUT',
       data: {
         nickName: e.detail.userInfo.nickName,

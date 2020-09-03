@@ -12,7 +12,7 @@ class CategoryModel {
           resolve();
         } else {
           wx.request({
-            url: 'https://www.keepaliveon.xyz:8080/api/catalog/' + getApp().globalData.openid,
+            url: 'http://127.0.0.1:8080/api/catalog/' + getApp().globalData.openid,
             method: 'POST',
             data: {
               text: cate
@@ -32,7 +32,7 @@ class CategoryModel {
 
   editCategory(id, text) {
     wx.request({
-      url: 'https://www.keepaliveon.xyz:8080/api/catalog/' + getApp().globalData.openid,
+      url: 'http://127.0.0.1:8080/api/catalog/' + getApp().globalData.openid,
       method: 'PUT',
       data: {
         id,
@@ -47,7 +47,7 @@ class CategoryModel {
 
   deleteCategory(id) {
     wx.request({
-      url: 'https://www.keepaliveon.xyz:8080/api/catalog/' + id,
+      url: 'http://127.0.0.1:8080/api/catalog/' + id,
       method: 'DELETE',
       success: function (res) {
 
@@ -69,7 +69,7 @@ class CategoryModel {
   getCategories() {
     return new Promise((resolve, reject) => {
       wx.request({
-        url: 'https://www.keepaliveon.xyz:8080/api/catalog/' + getApp().globalData.openid,
+        url: 'http://127.0.0.1:8080/api/catalog/' + getApp().globalData.openid,
         method: 'GET',
         success: function (res) {
           resolve(res)
